@@ -1,1 +1,16 @@
 /* Styles go here */
+.center {
+    position: relative;
+    top:30%;
+    left:45%; 
+}
+.back {
+    font-size: larger;
+    background-image: url(./img/banner-bg.png);
+
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}

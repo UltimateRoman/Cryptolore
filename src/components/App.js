@@ -3,24 +3,33 @@ import Web3 from 'web3';
 import './App.css';
 import { HalfCircleSpinner } from 'react-epic-spinners';
 import Cryptolore from '../abis/Cryptolore.json';
-import Portis from '@portis/web3'
 import Navbar from './Navbar.js'
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import Footer from './Footer.js'
 import Addwork from './Addwork'
 import Works from './Works'
 import Home from './Home'
-
-const portis = new Portis('5d10f4ad-64b5-47ad-a42f-879bec0cb939', 'maticMumbai');
-const web3 = new Web3(portis.provider);
-window.web3 = web3;
+import Mytokens from './Mytokens'
 
 class App extends Component {
   async componentWillMount() {
+    await this.loadWeb3()
     await this.loadBlockchainData()
   }
-
+  async loadWeb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+      await window.ethereum.enable()
+    }
+    else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider)
+    }
+    else {
+      window.alert('Non-Ethereum browser detected. You should use the MetaMask extension!')
+    }
+  }
   async loadBlockchainData() {
+    const web3 = window.web3
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
     const networkId = await web3.eth.net.getId()
@@ -112,7 +121,16 @@ class App extends Component {
                     : <Works works={this.state.works} buyWork={this.buyWork}/>
                 }
               </React.Fragment>
-          )} />   
+          )} />  
+          <Route exact path="/Mytokens" render={props => (
+              <React.Fragment>
+                {
+                  this.state.loading
+                    ? <div class="center"><HalfCircleSpinner size="100" color="red" /></div>
+                    : <Mytokens mytokens={this.state.mytokens} />
+                }
+              </React.Fragment>
+          )} /> 
         <Footer />
         </Router>
       </div>
