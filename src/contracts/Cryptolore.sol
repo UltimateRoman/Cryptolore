@@ -1,4 +1,4 @@
-  pragma solidity >=0.5.0;
+pragma solidity >=0.5.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
@@ -28,9 +28,9 @@ contract Cryptolore is ERC721 {
   function buyWork(uint _wId) public payable {
     Work memory work = works[_wId];
     work.writer.transfer(msg.value);
+    work.owner = msg.sender;
     _safeMint(msg.sender, _wId);
     _setTokenURI(_wId, work.content);
-    work.owner = msg.sender;
     work.isSold = true;
     works[_wId] = work;
   }
