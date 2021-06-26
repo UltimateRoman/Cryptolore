@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Web3 from 'web3';
 import './App.css';
 import Cryptolore from '../abis/Cryptolore.json';
+import Portis from '@portis/web3'
+import Navbar from './Navbar.js'
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 
 
 const portis = new Portis('5d10f4ad-64b5-47ad-a42f-879bec0cb939', 'maticMumbai');
@@ -33,6 +36,23 @@ class App extends Component {
       window.alert('The forum contract could not be deployed to network')
     }
   }
+  
+  addWork(price,title,content){
+    this.setState({ loading: true })
+    this.state.cpl.methods.addWork(window.web3.utils.toWei(price.toString(), 'ether'),title,content).send({ from: this.state.account })
+    .once('confirmation', (n, receipt) => {
+      this.setState({ loading: false })
+      window.location.reload()
+    })
+  }
+  buyWork(wId,amount){
+    this.setState({ loading: true })
+    this.state.cpl.methods.buyWork(wId).send({ from: this.state.account ,value: window.web3.utils.toWei(amount.toString(),'ether')})
+    .once('confirmation', (n, receipt) => {
+      this.setState({ loading: false })
+      window.location.reload()
+    })
+  }
   constructor(props) {
     super(props)
     this.state = {
@@ -43,13 +63,18 @@ class App extends Component {
       loading: true
     }
   }
+
   render() {
     return (
-      <div>
-        <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-          <h1>Cryptolore</h1>
-        </nav>
+      <div className="back">
+        <Router>
+        <Navbar />
+        <Route exact path="/" component={home} />
+        
+        <Footer />
+        </Router>
       </div>
+
     );
   }
 }
