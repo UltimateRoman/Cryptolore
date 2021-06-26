@@ -24,4 +24,14 @@ contract Cryptolore is ERC721 {
     worksId++;
     works[worksId] = Work(worksId, _price, _title, _content, msg.sender, msg.sender, false);
   }
+
+  function buyWork(uint _wId) public payable {
+    Work memory work = works[_wId];
+    work.writer.transfer(msg.value);
+    _safeMint(msg.sender, _wId);
+    _setTokenURI(_wId, work.content);
+    work.owner = msg.sender;
+    work.isSold = true;
+    works[_wId] = work;
+  }
 }
