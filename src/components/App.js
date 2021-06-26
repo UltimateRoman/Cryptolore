@@ -6,7 +6,7 @@ import Portis from '@portis/web3'
 import Navbar from './Navbar.js'
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import Footer from './Footer.js'
-
+import Home from './Home.js'
 
 const portis = new Portis('5d10f4ad-64b5-47ad-a42f-879bec0cb939', 'maticMumbai');
 const web3 = new Web3(portis.provider);
@@ -70,7 +70,7 @@ class App extends Component {
       <div className="back">
         <Router>
         <Navbar />
-
+        <Home />
         
         <Footer />
         </Router>
