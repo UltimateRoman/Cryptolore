@@ -36,9 +36,9 @@ export default function ButtonAppBar() {
           </Link>
           </Typography>
           <Link to="/add" style={{ color: '#FFF' }}>Add New Work</Link>
-          &nbsp; 
+          &nbsp;&nbsp;&nbsp;&nbsp; 
           <Link to="/works" style={{ color: '#FFF' }}>Gallery</Link>
-          &nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;
           <Link to="/mytokens" style={{ color: '#FFF' }}>Your NFTs</Link>          
         </Toolbar>
       </AppBar>
