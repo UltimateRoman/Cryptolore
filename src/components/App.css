@@ -14,3 +14,14 @@
     background-size: cover;
 
 }
+.column {
+    float: left;
+    width: 19%;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
